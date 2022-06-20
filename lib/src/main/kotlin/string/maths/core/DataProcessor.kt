@@ -74,4 +74,15 @@ class DataProcessor {
         repeat( maxPrecision - decimalPrecisionNum2 ) { num2.append( '0' ) }
     }
 
+    fun StringBuilder.trimAndFormatNumber() : StringBuilder {
+        var start = 0
+        val sign = if ( ! matches( "[+-].+".toRegex() ) ) "" else { start++ ; this[0].toString() }
+        var end = length-1
+        while ( this[start] == '0' ) start++
+        if ( contains( "." ) ) {
+            while ( this[end] == '0' ) end--
+        }
+        return StringBuilder( ( sign + substring( start , end+1 ).checkFormat() ) )
+    }
+
 }
