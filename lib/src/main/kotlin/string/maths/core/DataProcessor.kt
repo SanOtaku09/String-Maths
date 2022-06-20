@@ -28,6 +28,10 @@ class DataProcessor {
 
         num1 = Num1.toString().fixDotsPosition().run {
             checkFormat()
+            if ( matches( "0+".toRegex() ) ) {
+                originalNum1 = "0"
+                return@run StringBuilder( originalNum1 )
+            }
             if ( this[0] == '-' ) num1IsNegative = true
             var start = if ( matches( "[+-].+".toRegex() ) ) 1 else 0
             var end = length-1
@@ -42,6 +46,10 @@ class DataProcessor {
 
         num2 = Num2.toString().fixDotsPosition().run {
             checkFormat()
+            if ( matches( "0+".toRegex() ) ) {
+                originalNum2 = "0"
+                return@run StringBuilder( originalNum1 )
+            }
             if ( this[0] == '-' ) num2IsNegative = true
             var start = if ( matches( "[+-].+".toRegex() ) ) 1 else 0
             var end = length-1
@@ -51,6 +59,7 @@ class DataProcessor {
                 while ( this[end] == '0' ) end--
             }
             originalNum2 = substring( start , end+1 ).fixDotsPosition()
+            if ( originalNum2 == "" ) originalNum2 = "0"
             StringBuilder( originalNum2.replace( "." , "" ) )
         }
 
