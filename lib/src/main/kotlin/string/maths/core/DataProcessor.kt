@@ -40,7 +40,7 @@ class DataProcessor {
                 containsDecimalPrecision = true
                 while ( this[end] == '0' ) end--
             }
-            originalNum1 = substring( start , end+1 ).fixDotsPosition()
+            originalNum1 = substring( start , end+1 )
             StringBuilder( originalNum1.replace( "." , "" ) )
         }
 
@@ -58,7 +58,7 @@ class DataProcessor {
                 containsDecimalPrecision = true
                 while ( this[end] == '0' ) end--
             }
-            originalNum2 = substring( start , end+1 ).fixDotsPosition()
+            originalNum2 = substring( start , end+1 )
             if ( originalNum2 == "" ) originalNum2 = "0"
             StringBuilder( originalNum2.replace( "." , "" ) )
         }
