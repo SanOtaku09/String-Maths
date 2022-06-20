@@ -48,7 +48,7 @@ class DataProcessor {
             checkFormat()
             if ( matches( "\\+?-?0+".toRegex() ) || matches( "\\+?-?0+\\.0+".toRegex() ) ) {
                 originalNum2 = "0"
-                return@run StringBuilder( originalNum1 )
+                return@run StringBuilder( originalNum2 )
             }
             if ( this[0] == '-' ) num2IsNegative = true
             var start = if ( matches( "[+-].+".toRegex() ) ) 1 else 0
