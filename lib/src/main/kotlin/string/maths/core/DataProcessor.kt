@@ -29,7 +29,7 @@ class DataProcessor {
         num1 = Num1.toString().fixDotsPosition().run {
             checkFormat()
             if ( this[0] == '-' ) num1IsNegative = true
-            var start = if ( matches( "\\+?-?.+".toRegex() ) ) 1 else 0
+            var start = if ( matches( "[+-].+".toRegex() ) ) 1 else 0
             var end = length-1
             while ( this[start] == '0' ) start++
             if ( contains( "." ) ) {
@@ -43,7 +43,7 @@ class DataProcessor {
         num2 = Num2.toString().fixDotsPosition().run {
             checkFormat()
             if ( this[0] == '-' ) num2IsNegative = true
-            var start = if ( matches( "\\+?-?.+".toRegex() ) ) 1 else 0
+            var start = if ( matches( "[+-].+".toRegex() ) ) 1 else 0
             var end = length-1
             while ( this[start] == '0' ) start++
             if ( contains( "." ) ) {
