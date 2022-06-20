@@ -82,7 +82,7 @@ class DataProcessor {
         if ( contains( "." ) ) {
             while ( this[end] == '0' ) end--
         }
-        return StringBuilder( ( sign + substring( start , end+1 ).checkFormat() ) )
+        return StringBuilder( ( sign + substring( start , end+1 ).fixDotsPosition() ) )
     }
 
 }
