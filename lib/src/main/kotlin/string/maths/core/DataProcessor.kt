@@ -26,25 +26,43 @@ class DataProcessor {
 
     constructor ( Num1 : Any , Num2 : Any ) {
 
-        originalNum1 = Num1.toString().fixDotsPosition()
-        originalNum2 = Num2.toString().fixDotsPosition()
+        num1 = Num1.toString().fixDotsPosition().run {
+            checkFormat()
+            if ( this[0] == '-' ) num1IsNegative = true
+            var start = if ( matches( "\\+?-?.+".toRegex() ) ) 1 else 0
+            var end = length-1
+            while ( this[start] == '0' ) start++
+            if ( contains( "." ) ) {
+                containsDecimalPrecision = true
+                while ( this[end] == '0' ) end--
+            }
+            originalNum1 = substring( start , end+1 ).fixDotsPosition()
+            StringBuilder( originalNum1.replace( "." , "" ) )
+        }
 
-        originalNum1.checkFormat()
-        originalNum2.checkFormat()
-
-        if ( originalNum1.contains( "." ) || originalNum2.contains( "." ) ) containsDecimalPrecision = true
-
-        if ( originalNum1[0] == '-' ) num1IsNegative = true
-        if ( originalNum2[0] == '-' ) num2IsNegative = true
-
-        num1 = StringBuilder( originalNum1.replace( "+" , "" ).replace( "-" , "" ).replace( "." , "" ) )
-        num2 = StringBuilder( originalNum2.replace( "+" , "" ).replace( "-" , "" ).replace( "." , "" ) )
+        num2 = Num2.toString().fixDotsPosition().run {
+            checkFormat()
+            if ( this[0] == '-' ) num2IsNegative = true
+            var start = if ( matches( "\\+?-?.+".toRegex() ) ) 1 else 0
+            var end = length-1
+            while ( this[start] == '0' ) start++
+            if ( contains( "." ) ) {
+                containsDecimalPrecision = true
+                while ( this[end] == '0' ) end--
+            }
+            originalNum2 = substring( start , end+1 ).fixDotsPosition()
+            StringBuilder( originalNum2.replace( "." , "" ) )
+        }
 
         if ( ! containsDecimalPrecision ) return
 
-        if ( originalNum1.contains( "." ) ) decimalPrecisionNum1 = originalNum1.replace( "+" , "" ).replace( "-" , "" ).let { it.length - it.indexOf( "." ) } - 1
+        originalNum1.run {
+            if ( contains( "." ) ) decimalPrecisionNum1 = length - indexOf( "." ) - 1
+        }
 
-        if ( originalNum2.contains( "." ) ) decimalPrecisionNum2 = originalNum2.replace( "+" , "" ).replace( "-" , "" ).let { it.length - it.indexOf( "." ) } - 1
+        originalNum2.run {
+            if ( contains( "." ) ) decimalPrecisionNum2 = length - indexOf( "." ) - 1
+        }
 
         maxPrecision = if ( decimalPrecisionNum1 < decimalPrecisionNum2 ) decimalPrecisionNum2 else decimalPrecisionNum1
 
