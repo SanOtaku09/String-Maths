@@ -1,6 +1,5 @@
 package string.maths
 
-import string.maths.Multiply.multiply
 import string.maths.core.DataProcessor
 object Multiply {
 
