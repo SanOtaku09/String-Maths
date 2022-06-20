@@ -28,7 +28,7 @@ class DataProcessor {
 
         num1 = Num1.toString().fixDotsPosition().run {
             checkFormat()
-            if ( matches( "0+".toRegex() ) || matches( "0+\\.0+".toRegex() ) ) {
+            if ( matches( "\\+?-?0+".toRegex() ) || matches( "\\+?-?0+\\.0+".toRegex() ) ) {
                 originalNum1 = "0"
                 return@run StringBuilder( originalNum1 )
             }
@@ -46,7 +46,7 @@ class DataProcessor {
 
         num2 = Num2.toString().fixDotsPosition().run {
             checkFormat()
-            if ( matches( "0+".toRegex() ) || matches( "0+\\.0+".toRegex() ) ) {
+            if ( matches( "\\+?-?0+".toRegex() ) || matches( "\\+?-?0+\\.0+".toRegex() ) ) {
                 originalNum2 = "0"
                 return@run StringBuilder( originalNum1 )
             }
