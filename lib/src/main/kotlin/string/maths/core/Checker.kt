@@ -5,7 +5,7 @@ import string.maths.exception.IllegalFormatException
 object Checker {
 
     fun String.checkFormat() {
-        if ( !this.matches( "\\+?-?\\.?\\d+.".toRegex() ) && !this.matches( "\\+?-?\\.?\\d+\\.?\\d+".toRegex() ) ) throw IllegalFormatException( "Basic Format Error : $this" )
+        if ( !this.matches( "\\+?-?\\.?\\d+.".toRegex() ) && !this.matches( "\\+?-?\\.?\\d+\\.?\\d+".toRegex() ) && !this.matches( "\\+?-?\\d+".toRegex() ) ) throw IllegalFormatException( "Basic Format Error : $this" )
         if ( this.matches( "-?\\+.+".toRegex() ) && this.matches( "\\+?-.+".toRegex() ) ) throw IllegalFormatException( "$this : A number can only contain one sign either positive or negative" )
         if (
             this.let {
