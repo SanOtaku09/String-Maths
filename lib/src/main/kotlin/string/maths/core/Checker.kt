@@ -2,7 +2,7 @@ package string.maths.core
 
 import string.maths.exception.IllegalFormatException
 
-object Checker {
+internal object Checker {
 
     fun String.checkFormat() {
         if ( !this.matches( "\\+?-?\\.?\\d+.".toRegex() ) && !this.matches( "\\+?-?\\.?\\d+\\.?\\d+".toRegex() ) && !this.matches( "\\+?-?\\d+".toRegex() ) ) throw IllegalFormatException( "Basic Format Error : $this" )
