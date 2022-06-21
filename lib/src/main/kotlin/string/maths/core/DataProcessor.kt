@@ -118,4 +118,22 @@ class ProcessedData {
 
     override fun toString(): String = result.toString()
 
+    fun showDetails() : String {
+        return  """
+                |:::   $originalNum1   :::
+                |Value                      : $num1
+                |Sign                       : ${ if ( num1IsNegative ) "-" else "+" }
+                |Decimal Precision          : $decimalPrecisionNum1
+                |
+                |:::   $originalNum2   :::
+                |Value                      : $num2
+                |Sign                       : ${ if ( num2IsNegative ) "-" else "+" }
+                |Decimal Precision          : $decimalPrecisionNum2
+                |
+                |:::   Over All   :::
+                |Contains Decimal Precision : $containsDecimalPrecision
+                |Result                     : $result
+            """.trimMargin()
+    }
+
 }
