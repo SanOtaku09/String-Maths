@@ -6,7 +6,7 @@ object Multiply {
     infix fun Any.multiply(num: Any): StringBuilder {
         DataProcessor(this, num).run {
             if ( num1[0] == '0' || num2[0] == '0' ) return StringBuilder( "0" )
-            return num1.multiply(num2, num1IsNegative, num2IsNegative).let { result ->
+            return multiply().let { result ->
                 if ( ! containsDecimalPrecision ) result
                 else {
                     val sumPrecision = decimalPrecisionNum1 + decimalPrecisionNum2
@@ -30,12 +30,12 @@ object Multiply {
         }
     }
 
-    fun StringBuilder.multiply(num: StringBuilder, thisIsNegative: Boolean, numIsNegative: Boolean): StringBuilder {
+    internal fun DataProcessor.multiply(): StringBuilder {
         val product : StringBuilder = StringBuilder()
-        var level = 0 ; reverse() ; num.reverse()
-        for ( i in this ) {
+        var level = 0 ; num1.reverse() ; num2.reverse()
+        for ( i in num1 ) {
             var carry = 0 ; var index = level
-            for ( j in num ) {
+            for ( j in num2 ) {
                 var sum = ( i - '0' ) * ( j - '0' ) + carry
                 if ( index < product.length ) {
                     sum += product[index] - '0'
@@ -46,15 +46,15 @@ object Multiply {
             }
             while ( carry != 0 ) {
                 if ( index < product.length ) {
-                    carry += this[index] - '0'
-                    this[index] = ( carry % 10 ).toString()[0]
+                    carry += num1[index] - '0'
+                    num1[index] = ( carry % 10 ).toString()[0]
                 } else product.append( carry % 10 )
                 carry /= 10
                 index++
             }
             level++
         }
-        if ( thisIsNegative != numIsNegative ) product.append( '-' )
+        if ( num1IsNegative != num2IsNegative ) product.append( '-' )
         return product.reverse()
     }
 
