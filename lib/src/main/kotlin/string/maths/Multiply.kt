@@ -4,6 +4,10 @@ import string.maths.core.ProcessedData
 object Multiply {
 
     infix fun Any.multiply( num : Any ) : ProcessedData = ProcessedData( this , num ).run {
+        if ( num1.toString() == "0" || num2.toString() == "0" ) {
+            result.append( '0' )
+            return this
+        }
         multiply()
         addPrecision( decimalPrecisionNum1 + decimalPrecisionNum2 )
         trimAndFormatNumber()
