@@ -3,7 +3,10 @@ package string.maths.core
 import string.maths.core.Checker.checkFormat
 import string.maths.core.Checker.fixDotsPosition
 
-class DataProcessor {
+class ProcessedData {
+
+    // ans
+    var result : StringBuilder = StringBuilder()
 
     // original data
     var originalNum1 : String
@@ -83,15 +86,17 @@ class DataProcessor {
         repeat( maxPrecision - decimalPrecisionNum2 ) { num2.append( '0' ) }
     }
 
-    fun StringBuilder.trimAndFormatNumber() : StringBuilder {
+    fun trimAndFormatNumber() {
         var start = 0
-        val sign = if ( ! matches( "[+-].+".toRegex() ) ) "" else { start++ ; this[0].toString() }
-        var end = length-1
-        while ( this[start] == '0' ) start++
-        if ( contains( "." ) ) {
-            while ( this[end] == '0' ) end--
+        val sign = if ( ! result.matches( "[+-].+".toRegex() ) ) "" else { start++ ; result[0].toString() }
+        var end = result.length-1
+        while ( result[start] == '0' ) start++
+        if ( result.contains( "." ) ) {
+            while ( result[end] == '0' ) end--
         }
-        return StringBuilder( ( sign + substring( start , end+1 ).fixDotsPosition() ) )
+        result = StringBuilder( ( sign + result.substring( start , end+1 ).fixDotsPosition() ) )
     }
+
+    override fun toString(): String = result.toString()
 
 }
