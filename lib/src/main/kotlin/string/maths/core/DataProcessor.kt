@@ -97,6 +97,25 @@ class ProcessedData {
         result = StringBuilder( ( sign + result.substring( start , end+1 ).fixDotsPosition() ) )
     }
 
+    fun addPrecision( precisionValue : Int ) {
+        if ( ! containsDecimalPrecision ) return
+        val sign = if ( result.matches( "[+-].+".toRegex() ) ) result[0].toString() else ""
+        val start = if ( result.matches( "[+-].+".toRegex() ) ) 1 else 0
+        result = StringBuilder(
+            sign + result.substring( start ).run {
+                if ( precisionValue == length ) {
+                    "0.$result"
+                } else if ( precisionValue < length ) {
+                    substring( 0 , length - precisionValue ) + "." + substring( length - precisionValue )
+                } else {
+                    val zeroes = StringBuilder()
+                    repeat( precisionValue - length ) { zeroes.append( '0' ) }
+                    "0.$zeroes$result"
+                }
+            }
+        )
+    }
+
     override fun toString(): String = result.toString()
 
 }

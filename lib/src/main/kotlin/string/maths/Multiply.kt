@@ -5,24 +5,7 @@ object Multiply {
 
     infix fun Any.multiply( num : Any ) : ProcessedData = ProcessedData( this , num ).run {
         multiply()
-        if ( containsDecimalPrecision ) {
-            val sumPrecision = decimalPrecisionNum1 + decimalPrecisionNum2
-            val sign = if ( result.matches( "[+-].+".toRegex() ) ) result[0].toString() else ""
-            val start = if ( result.matches( "[+-].+".toRegex() ) ) 1 else 0
-            result = StringBuilder(
-                sign + result.substring( start ).run {
-                    if ( sumPrecision == length ) {
-                        "0.$result"
-                    } else if ( sumPrecision < length ) {
-                        substring( 0 , length - sumPrecision ) + "." + substring( length - sumPrecision )
-                    } else {
-                        val zeroes = StringBuilder()
-                        repeat( sumPrecision - length ) { zeroes.append( '0' ) }
-                        "0.$zeroes$result"
-                    }
-                }
-            )
-        }
+        addPrecision( decimalPrecisionNum1 + decimalPrecisionNum2 )
         trimAndFormatNumber()
         this
     }
