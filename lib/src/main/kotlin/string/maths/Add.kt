@@ -19,10 +19,10 @@ object Add {
 
         if ( num1IsNegative != num2IsNegative ) {
             if ( num1IsNegative ) {
-                num1IsNegative = false
-            } else {
                 swapValues()
-                num1IsNegative = false
+                num2IsNegative = false
+            } else {
+                num2IsNegative = false
             }
             subtract()
             return
