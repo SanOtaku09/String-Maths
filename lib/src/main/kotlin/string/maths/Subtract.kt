@@ -29,7 +29,6 @@ object Subtract {
         }
 
         if ( num1.toString() == num2.toString() ){
-                optimiseForSubtraction()
             result.append( '0' )
             return
         }
