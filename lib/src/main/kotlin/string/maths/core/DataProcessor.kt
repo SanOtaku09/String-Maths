@@ -27,6 +27,9 @@ class ProcessedData {
     var decimalPrecisionNum2 : Int = 0
     var maxPrecision : Int = 0
 
+    // operation name
+    var operation = '?'
+
     constructor ( Num1 : Any , Num2 : Any ) {
 
         num1 = Num1.toString().fixDotsPosition().run {
@@ -80,13 +83,14 @@ class ProcessedData {
 
     }
 
-    fun optimiseForAdditionAndSubtraction() {
+    fun balancedDigitInDecimalPrecision() {
         if ( ! containsDecimalPrecision ) return
         repeat( maxPrecision - decimalPrecisionNum1 ) { num1.append( '0' ) }
         repeat( maxPrecision - decimalPrecisionNum2 ) { num2.append( '0' ) }
     }
 
     fun trimAndFormatNumber() {
+        if ( result.matches( "-?0+".toRegex() ) || result.matches( "-?0+\\.0+".toRegex() ) ) return
         var start = 0
         val sign = if ( ! result.matches( "[+-].+".toRegex() ) ) "" else { start++ ; result[0].toString() }
         var end = result.length-1
@@ -116,6 +120,28 @@ class ProcessedData {
         )
     }
 
+    fun optimiseForSubtraction() {
+        num2IsNegative = !num2IsNegative
+        if ( num2.length > num1.length ) swapValues()
+        else if ( num1.length == num2.length ) {
+            var index = 0
+            while ( index < num1.length ) {
+                if ( num2[index] > num1[index] ) {
+                    swapValues()
+                    break
+                } else if ( num1[index] > num2[index] ) break
+                index++
+            }
+        }
+    }
+
+    fun swapValues() {
+        num2 = num1.also { num1 = num2 }
+        num1IsNegative = num2IsNegative.also { num2IsNegative = num1IsNegative }
+        originalNum1 = originalNum2.also { originalNum2 = originalNum1 }
+        decimalPrecisionNum1 = decimalPrecisionNum2.also { decimalPrecisionNum2 = decimalPrecisionNum1 }
+    }
+
     override fun toString(): String = result.toString()
 
     fun showDetails() : String {
@@ -132,7 +158,8 @@ class ProcessedData {
                 |
                 |:::   Over All   :::
                 |Contains Decimal Precision : $containsDecimalPrecision
-                |Result                     : $result
+                |Operation Performed        : ${operation.let { if ( operation == '?' ) "No operation has been performed Yet" else operation }}
+                |Result                     : ${result.let { if ( result.length == 0 ) "No operation has been performed Yet" else result }}
             """.trimMargin()
     }
 
