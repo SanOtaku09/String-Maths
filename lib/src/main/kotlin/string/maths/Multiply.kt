@@ -15,6 +15,7 @@ object Multiply {
     }
 
     internal fun ProcessedData.multiply() {
+        operation = 'x'
         var level = 0 ; num1.reverse() ; num2.reverse()
         for ( i in num1 ) {
             var carry = 0 ; var index = level
